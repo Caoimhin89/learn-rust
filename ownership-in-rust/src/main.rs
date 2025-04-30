@@ -137,7 +137,7 @@ fn working_with_funcs() {
         This approach of passing ownership back and forth is not
         a great approach, however. It's difficult to reason about
         and since only one function can hold ownership at a time,
-        it also makes concurrency challenging.
+        it also makes concurrency impossible.
 
         Cloning could be used to acheive concurrency, but that means
         data being stored multiple times on the heap, which is expensive.
@@ -150,6 +150,14 @@ fn working_with_funcs() {
         place in memory without taking ownership and without duplicating
         data and storing it multiple times in memory.
      */
+
+    let a = String::from("Ce chaoi a bhfuil tu");
+    borrows_by_ref(&a);
+    println!("a is {}", a); // can still use the value, because ownership is retained
+
+    let mut z = String::from("Dia duit"); // note "mut"
+    borrow_and_change(&mut z);
+    println!("z is {}", z); // Dia duit, a chara
 }
 
 fn takes_ownership(s: String) {
@@ -159,4 +167,61 @@ fn takes_ownership(s: String) {
 fn takes_ownership_and_gives_back(s: String) -> String {
     println!("s is {}", s);
     s
+}
+
+fn borrows_by_ref(s: &String) {
+    println!("s is {}", s);
+
+    /*
+        To borrow a value from the original value, the &
+        symbol is used. This is called a "reference".
+
+        There are two types of reference in Rust.
+        
+        The first is an "Immutable Reference".
+        This means that the value that is borrowed cannot be changed
+        by the borrower. Trying to change a value that is borrowed
+        will cause a compiler error.
+
+        The second is a "Mutable Reference". 
+        If it is necessary to change the value that is borrowed,
+        then a mutable reference must be used. A mutable reference
+        is created with the &mut symbol instead of the & symbol.
+     */
+    
+    // s.push_str(", a chara?"); // attempt to change value, causes compiler error
+}
+
+fn borrow_and_change(s: &mut String) {
+    s.push_str(", a chara");
+}
+
+// Limitations of Mutable References
+/*
+    If a variable is declared as mutable, then there can
+    only be one mutable reference to a value within a given
+    scope.
+
+    With mutable references, you can not use multiple mutable 
+    references at the same time, and you can not use mutable 
+    references with immutable references at the same time, 
+    this is a core safety feature in Rust to ensure that the 
+    value is not changed unexpectedly.
+*/
+
+// example function that will not compile
+/*
+fn demonstrate_mut_ref_limitation() {
+    let mut s = String::from("Dia duit");
+
+    let r1 = &mut s;
+    let r2 = &mut s;
+
+    concatenate(r1, r2);
+}
+*/
+
+fn concatenate(s1: &mut String, s2: &mut String) -> {
+    let result = s1.to_string() + s2;
+    result
 }
