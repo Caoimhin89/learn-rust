@@ -1,0 +1,162 @@
+// Ownership Rules
+/*
+    - Each value in Rust has an owner
+    - There can only be one owner at a time
+    - When the owner goes out of scope, the value will be dropped
+*/
+
+// Variable scope
+fn variable_scope {
+    let x = 5; // x is valid from this point
+    {
+        let y = 10; // y is valid from this point
+        println!("The value of y is: {}", y);
+    } // y goes out of scope here
+    println!("The value of x is: {}", x);
+} // x goes out of scope here
+
+// Transferring Ownership (moving values)
+/*
+    In most programming languages, when you assign a value
+    to a variable, you are copying the value to the variable if
+    it's a primitive type like an integer or boolean and if it's
+    an object or a reference type, you are copying the reference
+    to that object.
+
+    In Rust, when you assign a value to a variable, you are moving
+    the value to the variable and if you re-assign that variable to
+    another one, the value is moved to the new variable and the old 
+    variable is no longer valid.
+*/
+fn transfer_ownership() {
+    let x = String::from("Hello");
+    let y = x;
+    // println!("The value of x is: {}", x); // compiler error
+    println!("The value of y is: {}", y);
+
+    /*
+        In the above code x is moved to y and x is no longer
+        valid after that. This is because String is a complex
+        type and it's stored on the heap. Moving it to another
+        variable is more efficient than copying it.
+     */
+}
+
+// Copy Types
+/*
+    Moving values from one variable to another is only true
+    for complex types like String, Vec, etc. Types that 
+    implement the Copy trait are copied instead of moved.
+
+    Some types implement the Copy trait and these types can
+    be efficiently copied by simply assigning them to another
+    variable. This is because they are stored on the stack and
+    taking a copy of them is extremely cheap, since their size
+    is fixed and known at compile time.
+
+    These types are:
+
+    - All integer types (i32, u32, i64, u64, etc)
+    - bool
+    - char
+    - Floating point types (f32, f64, etc)
+    - Tuples that contain only types that implement the Copy trait
+*/
+
+fn copy_value() {
+    let x = 42;
+    let y = x;
+    println!("The value of x is: {}", x); // No compiler error, because the value of x is copied, not movied
+    println!("The value of y is: {}", y);
+}
+
+// Working with Ownership
+/*
+    If moving a value from one variable to another is
+    undesirable, and instead it is desirable to keep the
+    original value and use it in another place there are a
+    few options.
+
+    1) A clone of the value can be made
+    2) The reference to the original value can be used
+
+    Cloning:
+        Cloning creates a deep copy of the value along with its
+    nested values and store it in a new location in memory,
+    which usually requires memory allocation on the heap.
+
+    Copying:
+        When a variable is assigned to another variable which
+    holds a value of a type that implements Copy, a shallow
+    copy of the value is made, and each value will be stored
+    separately and independently on the stack.
+
+*/
+
+fn clone_value() {
+    let x = String::from("Dia duit");
+    let y = x.clone(); // value has been re-allocated (cloned)
+    println!("x is {}", x);
+    println("y is {}", y);
+
+    /*
+        In this example, both x and y are valid, because x
+        is cloned and a new value is created on the heap and
+        asigned to y. This way, it is possible to keep both the
+        original value and use it in another place.
+
+        Using clone() can sometimes be expensive, especially when
+        working with large chunks of data, because the entire value
+        is copied to a new location in memory. So it is advisable to
+        only use clone() when necessary.
+     */
+}
+
+fn working_with_funcs() {
+    let s = String::from("Dia is Muire duit");
+    takes_ownership(s);
+    // println!("s is {}", s); // compiler error
+
+    /*
+        When a value is passed to a function, the value
+        is moved to the recipient function and the function
+        becomes the owner of that value. Therefore, it is no
+        longer available in the context in which the recieving
+        function is called.
+
+        However, functions can also cede ownership back to the
+        calling context via their return values. This will allow
+        the variable in the parent context to be re-assumed and used.
+     */
+
+    let b = String::from("Conas ata tu?");
+    let b = takes_ownership_and_gives_back(b);
+    println!("b is {}", {});
+
+    /*
+        This approach of passing ownership back and forth is not
+        a great approach, however. It's difficult to reason about
+        and since only one function can hold ownership at a time,
+        it also makes concurrency challenging.
+
+        Cloning could be used to acheive concurrency, but that means
+        data being stored multiple times on the heap, which is expensive.
+
+        The most efficient way to pass values for other functions to read
+        is by using references. Instead of ceding ownership from
+        one function to another, the address of the value stored in memory
+        (the reference) can be passed from one function to another.
+        That way multiple functions can read the same data from the same
+        place in memory without taking ownership and without duplicating
+        data and storing it multiple times in memory.
+     */
+}
+
+fn takes_ownership(s: String) {
+    println!("s is {}", s);
+}
+
+fn takes_ownership_and_gives_back(s: String) -> String {
+    println!("s is {}", s);
+    s
+}
