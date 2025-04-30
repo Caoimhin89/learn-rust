@@ -225,3 +225,50 @@ fn concatenate(s1: &mut String, s2: &mut String) -> {
     let result = s1.to_string() + s2;
     result
 }
+
+// Strings and Slices
+/*
+    The String type is a wrapper around a vector of unsigned
+    8-byte integers (Vec<u8>) that represents a UTF-8 encoded
+    string. The String type is a growable, heap-allocated data
+    structure that allows you to store a sequence of UTF-8 encoded
+    characters.
+
+    A Slice is a reference to a sequence of elements in a collection.
+    In this case, it is a reference to a sequence of bytes in the String
+    type. The slice type is &str, which is a reference to a sequence
+    of UTF-8 encoded characters.
+*/
+
+fn strings_and_slices() {
+    let my_string = String::from("Foghlaim Rust");
+
+    let i_learn = &my_string(0..8);
+    let rust = &my_string(9..);
+
+    println("I'm learning {}", rust);
+}
+
+fn test_ownership() {
+    let mut text = String::from("good morning");
+
+    let prefix = get_prefix(&text);
+
+    text = format!("Hello {}", text);
+
+    println!("The prefix is: {}", prefix);
+    println!("The text is: {}", text);
+}
+
+fn get_prefix(t: &String) -> String {
+    let characters = t.chars();
+
+    for (idx, char) in characters.enumerate() {
+        if char == ' ' {
+            return t[0..idx].to_string();
+        }
+    }
+    t[..].to_string()
+}
+
+
