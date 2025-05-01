@@ -30,3 +30,22 @@ pub fn numerical_type_conversion(n: i32) -> u32 {
     n as u32
 }
 
+// Mathematical operations
+/*
+    This challenge is about basic mathematical operations. You will be given 2 numbers a and b. You need to perform the following operations:
+
+    1.) Sum of a and b
+    2.) Difference of a and b
+    3.) Multiplication of a and b
+    4.) Division of a and b
+
+    You need to return a tuple containing the results of the above operations in the same order. (sum, difference, multiply, divide)
+*/
+pub fn math_operations(a: i32, b: i32) -> (i32, i32, i32, i32) {
+    let sum: i32 = a + b;
+    let difference: i32 = a - b;
+    let product: i32 = a * b;
+    let quotient: i32 = a / b;
+
+    (sum, difference, product, quotient)
+}
