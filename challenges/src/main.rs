@@ -1,10 +1,19 @@
 fn main() {
+    // numerical conversion
     let num_i32: i32 = 5;
     println!(
         "Converted {} i32 to {} u32",
         num_i32,
         numerical_type_conversion(num_i32),
     );
+
+    // mathematical operations
+    math_operations(5, 9);
+
+    // sum of array
+    let arr_to_sum: &[i32] = &[1, 2, 3, 4, 5];
+    let summed_arr = sum_array(arr_to_sum);
+    println!("Summed array is {}", summed_arr);
 }
 
 // converting numerical types
@@ -48,4 +57,22 @@ pub fn math_operations(a: i32, b: i32) -> (i32, i32, i32, i32) {
     let quotient: i32 = a / b;
 
     (sum, difference, product, quotient)
+}
+
+// Sum of Array
+/*
+    Arrays are a fundamental data structure in Rust that allow you to store a fixed-size collection of elements of the same type. A common operation is to calculate the sum of all elements in an array.
+
+    In this challenge, you will implement a function to calculate the sum of elements in an array of integers i32.
+
+    Design and Development tips in your inbox. Every weekday.
+
+    Your task:
+    You need to implement the function sum_array(arr: &[i32]) -> i32 that takes a slice of integers and returns the sum of all elements.
+
+    Requirements:
+    The sum_array function should return the sum of all elements in the array.
+*/
+pub fn sum_array(arr: &[i32]) -> i32 {
+    arr.iter().sum()
 }
