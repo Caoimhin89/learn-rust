@@ -229,3 +229,67 @@ pub fn check_number_sign(number: i32) -> String {
         String::from("zero")
     }
 }
+
+// Ownership
+/*
+    Rust's ownership model is one of its most unique and 
+    powerful features, ensuring memory safety without 
+    needing a garbage collector. Ownership in Rust is 
+    governed by a set of rules that the compiler checks 
+    at compile time. Understanding these rules is crucial 
+    for writing efficient and safe Rust code.
+
+    Ownership Basics
+    In Rust, each value has a variable that's called its 
+    owner. There can only be one owner at a time, and 
+    when the owner goes out of scope, the value is 
+    dropped. Here are the basic rules of ownership:
+
+    - Each value in Rust has a variable that's called its 
+    owner.
+    - There can only be one owner at a time.
+    - When the owner goes out of scope, the value will be 
+    dropped (no longer valid).
+
+    Borrowing
+    Rust allows you to create references to a value, which 
+    lets you access it without taking ownership. This is 
+    called borrowing. Borrowing can be immutable or mutable.
+
+    Immutable References
+    You can create multiple immutable references to a 
+    value, but you cannot have a mutable reference while 
+    immutable references exist. This allows you to read 
+    from the value without changing it.
+
+    Using & to Create References:
+    In the example above, &s1 creates an immutable reference 
+    to s1. This means that calculate_length borrows s1 
+    but does not take ownership of it. The & symbol is 
+    used to denote a reference in Rust. This allows the 
+    function to access the value without taking ownership, 
+    which means s1 can still be used after the function 
+    call.
+
+    Similarly, in the function signature 
+        fn calculate_length(s: &String) -> usize, &String 
+    indicates that the parameter s is an immutable reference 
+    to a String. This allows the function to read from 
+    the String without modifying it or taking ownership.
+
+    Challenge:
+    In this challenge, you will create a function 
+    calculate_length that takes an immutable reference 
+    to a String, calculates its length, and returns the 
+    length.
+
+    The task is designed to help you understand the 
+    concepts of ownership and immutable borrowing in Rust.
+
+    Requirements:
+    The calculate_length function should take an immutable 
+    reference to the input String and return its length.
+*/
+pub fn calculate_length(s: &String) -> usize {
+    s.len()
+}
