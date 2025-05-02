@@ -135,3 +135,49 @@ pub fn print_message() -> () {
     println!("Hello, Rust!");
     ()
 }
+
+// Functions
+/*
+    Functions are a fundamental building block in Rust, 
+    as in any programming language. They allow you to 
+    encapsulate logic and reuse code, making your 
+    programs more modular and easier to understand. 
+    In this challenge, you will define and implement a 
+    series of simple functions that perform basic 
+    operations.
+
+    Your task:
+    Your task is to define three functions:
+
+    add(a: i32, b: i32) -> i32
+        This function should return the sum of a and b.
+    subtract(a: i32, b: i32) -> i32
+        This function should return the difference between 
+        a and b.
+    multiply(a: i32, b: i32) -> i32
+    This function should return the product of a and b.
+    You need to complete these functions so that they 
+    correctly perform the specified operations.
+*/
+pub fn add(a: i32, b: i32) -> i32 {
+    // Step 1: implement addition
+    a + b
+}
+
+// Step 2:
+// Define a public function named `subtract`
+// that accepts two arguments of type `i32`
+// and returns an `i32`.
+// make sure you make the function public by using the `pub` keyword.
+pub fn subtract(a: i32, b: i32) -> i32 {
+    a - b
+}
+
+// Step 3:
+// Define a public function named `multiply`
+// that accepts two arguments of type `i32`
+// and returns an `i32`.
+// make sure you make the function public by using the `pub` keyword.
+pub fn multiply(a: i32, b: i32) -> i32 {
+    a * b
+}
